@@ -1,6 +1,6 @@
 const express = require("express");
 const z = require("zod");
-const { User } = require("../db");
+const { User, Account } = require("../db");
 const jwt = require("jsonwebtoken");
 const { authMiddleware } = require("../authMiddleware");
 require("dotenv").config();
@@ -15,6 +15,7 @@ const signupBody = z.object({
 });
 
 // @route   POST api/auth/
+// SIGN-UP ----------------------
 router.post("/signup", async (req, res) => {
   const body = req.body;
   const { success } = signupBody.safeParse(body);
@@ -38,6 +39,13 @@ router.post("/signup", async (req, res) => {
   }
 
   const newUser = await User.create(body);
+  const userId = newUser._id;
+
+  await Account.create({
+    userId,
+    balance: 1 + Math.random() * 10000,
+  });
+
   const token = jwt.sign(
     {
       userId: newUser._id,
@@ -50,6 +58,7 @@ router.post("/signup", async (req, res) => {
   });
 });
 
+// SIGN-IN ----------------------
 const signinBody = z.object({
   username: z.string().email(),
   password: z.string(),
@@ -88,6 +97,7 @@ router.post("/signin", async (req, res) => {
   });
 });
 
+// USER UPDATE ----------------------
 const updateBody = z.object({
   password: z.string().optional(),
   firstName: z.string().optional(),
@@ -104,8 +114,8 @@ router.put("/", authMiddleware, async (req, res) => {
   }
 
   await User.updateOne(
-    { _id: req.userId },       // Filter: find the document by ID
-    { $set: req.body }         // Update: specify the fields to update and their new values
+    { _id: req.userId }, // Filter: find the document by ID
+    { $set: req.body } // Update: specify the fields to update and their new values
   );
 
   res.json({
@@ -113,6 +123,7 @@ router.put("/", authMiddleware, async (req, res) => {
   });
 });
 
+// SEARCH USER ----------------------
 router.get("/bulk", async (req, res) => {
   const filter = req.query.filter || "";
 
@@ -122,8 +133,10 @@ router.get("/bulk", async (req, res) => {
         firstName: {
           $regex: filter,
         },
+      },
+      {
         lastName: {
-          regex: filter,
+          $regex: filter,
         },
       },
     ],
