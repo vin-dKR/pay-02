@@ -4,7 +4,7 @@ const dbUrl = process.env.MONGO_URI;
 
 mongoose.connect(dbUrl);
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
@@ -25,16 +25,16 @@ const userSchema = mongoose.Schema({
 },
 });
 
-const accountSchema = mongoose.Schema({
+const accountSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: mongoose.Schema.Types.ObjectId, // Reference to User model
+    ref: 'User',
     required: true
-  },
+},
   balance: {
     type: Number,
     required: true
-  }
+}
 })
 
 const User = mongoose.model("User", userSchema);
