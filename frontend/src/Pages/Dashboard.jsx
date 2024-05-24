@@ -8,7 +8,7 @@ function Dashboard() {
     <div>
       <Appbar />
       <div className='m-8'>
-        <Balance Value={"2000"} />
+        <Balance value={"2000"} />
         <Users/>
       </div>
     </div>
