@@ -3,8 +3,8 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -21,6 +21,7 @@ function Signup() {
           <Heading label={"Sign UP"} />
           <SubHeading label={"Enter your infromation to create an account"} />
           <InputBox
+            type={"text"}
             onChange={(e) => {
               setFirstName(e.target.value);
             }}
@@ -28,6 +29,7 @@ function Signup() {
             placeholder={"Vinod"}
           />
           <InputBox
+            type={"text"}
             onChange={(e) => {
               setLastName(e.target.value);
             }}
@@ -35,6 +37,7 @@ function Signup() {
             placeholder={"KR"}
           />
           <InputBox
+            type={"text"}
             onChange={(e) => {
               setUsername(e.target.value);
             }}
@@ -42,22 +45,29 @@ function Signup() {
             placeholder={"vinodkr@gmail.com"}
           />
           <InputBox
+            type={"text"}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             label={"Password"}
             placeholder={"Password"}
           />
-          <Button onClick={async () => {
-            const response = await axios.post('http://localhost:3000/api/v1/users/signup', {
-              firstName,
-              lastName,
-              username,
-              password
-            })
-            localStorage.setItem("token", response.data.token);
-            navigate('/dashboard');
-          }} label={"Sign Up"} />
+          <Button
+            onClick={async () => {
+              const response = await axios.post(
+                "http://localhost:3000/api/v1/users/signup",
+                {
+                  firstName,
+                  lastName,
+                  username,
+                  password,
+                }
+              );
+              localStorage.setItem("token", response.data.token);
+              navigate("/dashboard");
+            }}
+            label={"Sign Up"}
+          />
         </div>
       </div>
       <div className="mt-8"></div>

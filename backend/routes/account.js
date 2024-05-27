@@ -9,16 +9,6 @@ const jwt = require("jsonwebtoken");
 
 // @Balance route
 router.get("/balance", authMiddleware, async (req, res) => {
-//   const auth = req.headers.authorization;
-//   const token = auth.split(" ")[1];
-
-//   const decoded = jwt.verify(token, JWT_SECRET);
-
-//   if (decoded.userId) {
-//     req.userId = decoded.userId;
-//   } else {
-//     return res.status(403).json({ error: "dsfsdf" });
-//   }
 
   const account = await Account.findOne({
     userId: req.userId,

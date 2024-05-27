@@ -9,7 +9,7 @@ function Users() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/v1/users/bulk?filter" + filter)
+      .get("http://localhost:3000/api/v1/users/bulk?filter=" + filter)
       .then((response) => {
         setUsers(response.data.user);
       });
@@ -58,7 +58,7 @@ function User({ user }) {
       <div className="flex flex-col justify-center self-center h-full">
         <Button
         onClick={(e) => {
-          navigate('/send?id' + user._id + "&username" + user.username)
+          navigate('/send?id=' + user._id + "&name=" + user.firstName)
         }} 
         label={"Send Money"} />
       </div>

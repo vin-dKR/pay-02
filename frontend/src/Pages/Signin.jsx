@@ -19,6 +19,7 @@ function Signin() {
           <Heading label={"Sign IN"} />
           <SubHeading label={"Enter your credential to Sign In"} />
           <InputBox
+            type={"text"}
             onChange={(e) => {
               setUserName(e.target.value);
             }}
@@ -26,6 +27,7 @@ function Signin() {
             placeholder={"vinodkr@gmail.com"}
           />
           <InputBox
+            type={"text"}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -33,14 +35,20 @@ function Signin() {
             placeholder={"Password"}
           />
           <div className="mt-8"></div>
-          <Button onClick={async () => {
-            const response = await axios.post('http://localhost:3000/api/v1/users/signin', {
-              username,
-              password
-            })
-            localStorage.setItem('token', response.data.token);
-            navigate('/dashboard');
-          }} label={"Sign In"} />
+          <Button
+            onClick={async () => {
+              const response = await axios.post(
+                "http://localhost:3000/api/v1/users/signin",
+                {
+                  username,
+                  password,
+                }
+              );
+              localStorage.setItem("token", response.data.token);
+              navigate("/dashboard");
+            }}
+            label={"Sign In"}
+          />
         </div>
       </div>
     </div>
