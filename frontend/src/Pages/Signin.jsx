@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
+import BottomWarning from '../components/BottomWarning'
 
 function Signin() {
   const [username, setUserName] = useState("");
@@ -49,6 +50,7 @@ function Signin() {
             }}
             label={"Sign In"}
           />
+          <BottomWarning label={"Create User"} buttonText={"sign up"} to={"/signup"} />
         </div>
       </div>
     </div>
